@@ -1,0 +1,184 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 360" width="800" height="360">
+  <defs>
+    <style type="text/css">
+      /*<![CDATA[*/
+      @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;700&family=Inter:wght@400;600;700&display=swap');
+
+      /* General Styles */
+      .bg { fill: #090d16; }
+      .card-bg { fill: #0f172a; stroke: #1e293b; stroke-width: 1.5; }
+      .divider-line { stroke: #1e293b; stroke-width: 1.5; stroke-dasharray: 6 6; }
+
+      /* Typography */
+      .title { font-family: 'Inter', system-ui, sans-serif; font-size: 18px; font-weight: 700; }
+      .subtitle { font-family: 'Inter', system-ui, sans-serif; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
+      .code-font { font-family: 'Fira Code', 'Consolas', monospace; font-size: 12px; }
+      .badge-text { font-family: 'Inter', system-ui, sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; }
+
+      /* Theme Colors */
+      .text-primary { fill: #f8fafc; }
+      .text-muted { fill: #64748b; }
+      .color-db { fill: #38bdf8; }
+      .color-wal { fill: #fbbf24; }
+      .color-sync { fill: #34d399; }
+      .color-shadow { fill: #a78bfa; }
+
+      /* Glow & Shadows */
+      .glow-blue { filter: drop-shadow(0 0 8px rgba(56, 189, 248, 0.4)); }
+      .glow-green { filter: drop-shadow(0 0 8px rgba(52, 211, 153, 0.4)); }
+      .glow-orange { filter: drop-shadow(0 0 8px rgba(251, 191, 36, 0.4)); }
+      .glow-purple { filter: drop-shadow(0 0 10px rgba(167, 139, 250, 0.5)); }
+
+      /* Animations */
+      @keyframes blink { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; } }
+      .cursor { animation: blink 1s step-end infinite; }
+
+      @keyframes pulse {
+        0%, 100% { transform: scale(1); opacity: 0.9; }
+        50% { transform: scale(1.03); opacity: 1; }
+      }
+      .sync-pulse { animation: pulse 2.5s ease-in-out infinite; transform-origin: 400px 170px; }
+
+      @keyframes flowLeftToRight {
+        0% { stroke-dashoffset: 24; }
+        100% { stroke-dashoffset: 0; }
+      }
+      .data-pipe {
+        stroke: #38bdf8;
+        stroke-width: 2.5;
+        stroke-linecap: round;
+        stroke-dasharray: 8 6;
+        animation: flowLeftToRight 1.5s linear infinite;
+      }
+      .backup-pipe {
+        stroke: #34d399;
+        stroke-width: 2.5;
+        stroke-linecap: round;
+        stroke-dasharray: 8 6;
+        animation: flowLeftToRight 1.5s linear infinite;
+      }
+
+      @keyframes dbActive {
+        0%, 100% { opacity: 0.4; }
+        50% { opacity: 1; }
+      }
+      .active-ledger { animation: dbActive 2s ease-in-out infinite; }
+
+      @keyframes rotate {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+      }
+      .sync-wheel { animation: rotate 4s linear infinite; transform-origin: 400px 170px; }
+      /*]]>*/
+    </style>
+
+    <!-- Gradients -->
+    <linearGradient id="db-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.12" />
+      <stop offset="100%" stop-color="#38bdf8" stop-opacity="0.0" />
+    </linearGradient>
+    <linearGradient id="shadow-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#a78bfa" stop-opacity="0.12" />
+      <stop offset="100%" stop-color="#a78bfa" stop-opacity="0.0" />
+    </linearGradient>
+    <linearGradient id="sync-wheel-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#34d399" />
+      <stop offset="100%" stop-color="#3b82f6" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect class="bg" width="800" height="360" rx="16" ry="16" />
+
+  <!-- HEADER -->
+  <g transform="translate(30, 45)">
+    <text class="title text-primary" x="0" y="0">💾 SQLite Shadow Sync Demo</text>
+    <text class="text-muted" x="0" y="22" font-family="'Inter', sans-serif" font-size="14px">Safely backup SQLite databases background WAL-safely, with compression &amp; rotation</text>
+  </g>
+
+  <!-- FLOW PIPE BRIDGES -->
+  <!-- Left to center (DB pipeline) -->
+  <path d="M 180,170 H 350" fill="none" stroke="#1e293b" stroke-width="6" stroke-linecap="round" />
+  <path class="data-pipe" d="M 180,170 H 350" fill="none" />
+
+  <!-- Center to Right (Compressed sync pipeline) -->
+  <path d="M 450,170 H 620" fill="none" stroke="#1e293b" stroke-width="6" stroke-linecap="round" />
+  <path class="backup-pipe" d="M 450,170 H 620" fill="none" />
+
+  <!-- CENTRAL SYNC CORE -->
+  <g class="sync-pulse">
+    <circle class="sync-wheel glow-green" cx="400" cy="170" r="26" fill="none" stroke="url(#sync-wheel-grad)" stroke-width="4.5" stroke-dasharray="12 12" />
+    <circle cx="400" cy="170" r="16" fill="#1e293b" />
+    <path d="M 395,167 L 400,162 L 405,167 M 400,163 V 177" fill="none" stroke="#34d399" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+  </g>
+  <text class="badge-text color-sync glow-green" x="358" y="212">WAL-SAFE SYNC</text>
+
+  <!-- ================= LEFT COLUMN: SQLite Active DB ================= -->
+  <g transform="translate(30, 95)">
+    <rect class="card-bg" width="220" height="235" rx="12" ry="12" />
+    <rect width="220" height="235" fill="url(#db-grad)" rx="12" ry="12" />
+    <rect class="glow-blue" x="15" y="15" width="80" height="20" rx="4" ry="4" fill="#f0f9ff" stroke="#bae6fd" stroke-width="1" />
+    <text class="badge-text color-db" x="22" y="29">📀 ACTIVE</text>
+    <text class="subtitle text-muted" x="110" y="29">Source Database</text>
+
+    <!-- Database Stack -->
+    <g transform="translate(20, 50)">
+      <!-- DB Ledger rows -->
+      <rect fill="#020617" x="0" y="0" width="180" height="155" rx="8" ry="8" stroke="#1e293b" />
+      
+      <!-- Safe indicator -->
+      <g class="active-ledger" transform="translate(15, 15)">
+        <text class="code-font color-db">&gt; INSERT INTO users...</text>
+        <rect fill="#0284c7" x="0" y="15" width="150" height="4" rx="2" />
+      </g>
+      
+      <g class="active-ledger" transform="translate(15, 45)" style="animation-delay: 0.5s;">
+        <text class="code-font color-db">&gt; UPDATE accounts...</text>
+        <rect fill="#0284c7" x="0" y="15" width="130" height="4" rx="2" />
+      </g>
+
+      <!-- WAL Log Panel -->
+      <g transform="translate(15, 80)">
+        <rect fill="#1e1b4b" x="0" y="0" width="150" height="60" rx="6" ry="6" stroke="#312e81" />
+        <text class="badge-text color-wal glow-orange" x="10" y="18" font-size="9px">⚡ SQLite WAL LOG</text>
+        <text class="code-font color-wal" x="10" y="38" font-size="10px">Status: Idle</text>
+        <text class="code-font text-muted" x="10" y="50" font-size="9px">Un-checkpointed: 0%</text>
+      </g>
+    </g>
+  </g>
+
+  <!-- ================= RIGHT COLUMN: Shadows Sync ================= -->
+  <g transform="translate(550, 95)">
+    <rect class="card-bg" width="220" height="235" rx="12" ry="12" />
+    <rect width="220" height="235" fill="url(#shadow-grad)" rx="12" ry="12" />
+    <rect class="glow-purple" x="15" y="15" width="80" height="20" rx="4" ry="4" fill="#faf5ff" stroke="#e9d5ff" stroke-width="1" />
+    <text class="badge-text color-shadow" x="22" y="29">🔒 SHADOWS</text>
+    <text class="subtitle text-muted" x="110" y="29">Sync Backups</text>
+
+    <!-- Backup List -->
+    <g transform="translate(20, 50)">
+      <rect fill="#020617" x="0" y="0" width="180" height="155" rx="8" ry="8" stroke="#1e293b" />
+      
+      <!-- Backup 1 (Gzipped) -->
+      <g transform="translate(12, 15)">
+        <rect fill="#0f172a" x="0" y="0" width="156" height="36" rx="5" ry="5" stroke="#4c1d95" stroke-width="1" />
+        <text class="code-font text-primary" x="8" y="16" font-size="10px">backup_2026-06-01.db.gz</text>
+        <text class="code-font color-sync" x="8" y="28" font-size="9px">✔ Integrity OK (84KB)</text>
+      </g>
+
+      <!-- Backup 2 (Gzipped) -->
+      <g transform="translate(12, 60)" opacity="0.7">
+        <rect fill="#0f172a" x="0" y="0" width="156" height="36" rx="5" ry="5" stroke="#1e293b" stroke-width="1" />
+        <text class="code-font text-muted" x="8" y="16" font-size="10px">backup_2026-05-31.db.gz</text>
+        <text class="code-font color-sync" x="8" y="28" font-size="9px">✔ Rotated Shadow</text>
+      </g>
+
+      <!-- Backup 3 (Gzipped) -->
+      <g transform="translate(12, 105)" opacity="0.4">
+        <rect fill="#0f172a" x="0" y="0" width="156" height="36" rx="5" ry="5" stroke="#1e293b" stroke-width="1" />
+        <text class="code-font text-muted" x="8" y="16" font-size="10px">backup_2026-05-30.db.gz</text>
+        <text class="code-font color-sync" x="8" y="28" font-size="9px">✔ Rotated Shadow</text>
+      </g>
+    </g>
+  </g>
+</svg>
