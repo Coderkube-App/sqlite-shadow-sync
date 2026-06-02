@@ -5,7 +5,7 @@ Safe, zero-lock, automatic background shadow backups for SQLite in Node.js. Safe
 ## 🎬 Demo
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Coderkube-App/sqlite-shadow-sync/main/assets/sqlite_shadow_sync_demo.svg" alt="SQLite Shadow Sync Demo" width="800" />
+  <img src="/assets/sqlite_shadow_sync_demo.svg" alt="SQLite Shadow Sync Demo" width="800" />
 </p>
 
 ---

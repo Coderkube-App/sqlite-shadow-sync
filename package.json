@@ -7,8 +7,8 @@
   "types": "./dist/index.d.ts",
   "type": "module",
   "scripts": {
-    "build": "tsup src/index.ts --format cjs,esm --dts --minify --clean",
-    "dev": "tsup src/index.ts --format cjs,esm --watch --dts",
+    "build": "node init && tsup src/index.ts --format cjs,esm --dts --minify --clean",
+    "dev": "node init && tsup src/index.ts --format cjs,esm --watch --dts",
     "test": "vitest run"
   },
   "keywords": [
@@ -24,7 +24,10 @@
   ],
   "author": "Coderkube App",
   "license": "MIT",
-  "dependencies": {},
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "node-fetch": "^3.3.2"
+  },
   "peerDependencies": {
     "better-sqlite3": "^8.0.0 || ^9.0.0 || ^10.0.0 || ^11.0.0",
     "sqlite3": "^5.0.0"
