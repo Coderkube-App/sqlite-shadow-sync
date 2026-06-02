@@ -8,7 +8,7 @@ Safe, zero-lock, automatic background shadow backups for SQLite in Node.js. Safe
   <img src="https://raw.githubusercontent.com/Coderkube-App/sqlite-shadow-sync/main/assets/sqlite_shadow_sync_demo.svg" alt="SQLite Shadow Sync Demo" width="800" />
 </p>
 
-----
+---
 
 ## ✨ Features
 
@@ -29,25 +29,26 @@ Safe, zero-lock, automatic background shadow backups for SQLite in Node.js. Safe
 npm install sqlite-shadow-sync
 ```
 
-*(Optional peers: `better-sqlite3` or `sqlite3` for active backups)*
+_(Optional peers: `better-sqlite3` or `sqlite3` for active backups)_
 
 ---
 
 ## 🚀 Usage
 
 ### 1. File-Watcher / Passive Mode (Zero-Connection)
+
 Runs passively in the background. It watches the SQLite `.db` file, waits for a silent period with no active write changes (the idle timeout), and backs it up safely.
 
 ```javascript
-import { SqliteShadowSync } from 'sqlite-shadow-sync';
+import { SqliteShadowSync } from "sqlite-shadow-sync";
 
 const shadow = new SqliteShadowSync({
-  dbPath: './data/prod.db',
-  backupDir: './backups',
-  watch: true,             // Enable filesystem watching
-  idleTimeoutMs: 3000,     // Wait 3s after last write before copying
-  compress: true,          // Gzip compression (.db.gz)
-  maxBackups: 10,          // Keep last 10 backups
+  dbPath: "./data/prod.db",
+  backupDir: "./backups",
+  watch: true, // Enable filesystem watching
+  idleTimeoutMs: 3000, // Wait 3s after last write before copying
+  compress: true, // Gzip compression (.db.gz)
+  maxBackups: 10, // Keep last 10 backups
   onBackupSuccess: (path) => console.log(`✓ Backup saved: ${path}`),
   onBackupFailure: (err) => console.error(`✗ Backup failed:`, err),
 });
@@ -57,29 +58,31 @@ const shadow = new SqliteShadowSync({
 ```
 
 ### 2. Time-Interval Mode
+
 Performs automated backups on a custom timing interval loop.
 
 ```javascript
 const shadow = new SqliteShadowSync({
-  dbPath: './data/prod.db',
-  backupDir: './backups',
+  dbPath: "./data/prod.db",
+  backupDir: "./backups",
   intervalMs: 1000 * 60 * 60 * 2, // Backup every 2 hours
   compress: true,
 });
 ```
 
 ### 3. Active Connection Backup (Manual trigger)
+
 Trigger backups manually or from server tasks. If you provide an active SQLite connection (e.g. from `better-sqlite3`), it leverages native database backup handlers.
 
 ```javascript
-import Database from 'better-sqlite3';
-import { SqliteShadowSync } from 'sqlite-shadow-sync';
+import Database from "better-sqlite3";
+import { SqliteShadowSync } from "sqlite-shadow-sync";
 
-const db = new Database('prod.db');
+const db = new Database("prod.db");
 
 const shadow = new SqliteShadowSync({
-  dbPath: './prod.db',
-  backupDir: './backups',
+  dbPath: "./prod.db",
+  backupDir: "./backups",
 });
 
 // Trigger backup using active DB connection handles
@@ -90,15 +93,15 @@ await shadow.backup({ dbConnection: db });
 
 ## ⚙️ API Configuration Reference
 
-| Option | Type | Default | Description |
-| :--- | :--- | :--- | :--- |
-| `dbPath` | `string` | *Required* | Absolute or relative path to the source SQLite database file. |
-| `backupDir` | `string` | *Required* | Directory where shadow backup files are saved. |
-| `intervalMs` | `number` | `undefined` | Triggers a backup at the specified interval in milliseconds. |
-| `maxBackups` | `number` | `10` | Maximum backup count to maintain. Older files are automatically rotated out. (Set `0` for unlimited). |
-| `compress` | `boolean` | `true` | Stream compress backup files using high-level gzip. (.db.gz) |
-| `watch` | `boolean` | `false` | Enable standard FSWatcher to detect database file writes. |
-| `idleTimeoutMs` | `number` | `2000` | Delay in milliseconds to wait for writes to quiet down before copying. |
+| Option          | Type      | Default     | Description                                                                                           |
+| :-------------- | :-------- | :---------- | :---------------------------------------------------------------------------------------------------- |
+| `dbPath`        | `string`  | _Required_  | Absolute or relative path to the source SQLite database file.                                         |
+| `backupDir`     | `string`  | _Required_  | Directory where shadow backup files are saved.                                                        |
+| `intervalMs`    | `number`  | `undefined` | Triggers a backup at the specified interval in milliseconds.                                          |
+| `maxBackups`    | `number`  | `10`        | Maximum backup count to maintain. Older files are automatically rotated out. (Set `0` for unlimited). |
+| `compress`      | `boolean` | `true`      | Stream compress backup files using high-level gzip. (.db.gz)                                          |
+| `watch`         | `boolean` | `false`     | Enable standard FSWatcher to detect database file writes.                                             |
+| `idleTimeoutMs` | `number`  | `2000`      | Delay in milliseconds to wait for writes to quiet down before copying.                                |
 
 ---
 
