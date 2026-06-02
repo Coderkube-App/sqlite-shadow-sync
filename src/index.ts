@@ -166,10 +166,6 @@ export class SqliteShadowSync extends EventEmitter {
       throw new Error('Backup already in progress');
     }
 
-    if (!fs.existsSync(this.dbPath)) {
-      throw new Error(`Database file not found at path: ${this.dbPath}`);
-    }
-
     this.isBackingUp = true;
     this.emit('backupStart');
 
@@ -179,6 +175,10 @@ export class SqliteShadowSync extends EventEmitter {
     const finalBackupPath = path.join(this.backupDir, `backup_${dateStr}.${finalExt}`);
 
     try {
+      if (!fs.existsSync(this.dbPath)) {
+        throw new Error(`Database file not found at path: ${this.dbPath}`);
+      }
+
       const dbConnection = options.dbConnection;
 
       if (dbConnection) {
